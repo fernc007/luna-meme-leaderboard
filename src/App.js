@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import supabase from './supabaseClient';
 
-function App() {
+function Leaderboard() {
+  const [memes, setMemes] = useState([]);
+
+  useEffect(() => {
+    const fetchMemes = async () => {
+      const { data, error } = await supabase
+        .from('memes')
+        .select('*')
+        .order('upVote', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching leaderboard:', error.message);
+      } else {
+        setMemes(data);
+      }
+    };
+
+    fetchMemes();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ padding: '20px' }}>
+      <h1>🏆 Meme Leaderboard</h1>
+      <div style={{
+        display: 'grid',
+        gap: '20px',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))'
+      }}>
+        {memes.map((meme, index) => (
+          <div
+            key={meme.id}
+            style={{
+              border: '1px solid #ccc',
+              padding: '10px',
+              borderRadius: '10px',
+              background: '#fff',
+              textAlign: 'center'
+            }}
+          >
+            <h3>#{index + 1}</h3>
+            <img
+              src={meme.image_url}
+              alt={meme.text}
+              style={{ maxWidth: '100%', borderRadius: '6px' }}
+            />
+            <p style={{ fontWeight: 'bold' }}>{meme.text}</p>
+            <p>🔥 Votes: {meme.upVote}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
-export default App;
+export default Leaderboard;
