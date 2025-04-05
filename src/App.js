@@ -21,38 +21,21 @@ function Leaderboard() {
     fetchMemes();
   }, []);
 
-  return (
-    <div style={{ padding: '20px' }}>
-      <h1>🏆 Meme Leaderboard</h1>
-      <div style={{
-        display: 'grid',
-        gap: '20px',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))'
-      }}>
-        {memes.map((meme, index) => (
-          <div
-            key={meme.id}
-            style={{
-              border: '1px solid #ccc',
-              padding: '10px',
-              borderRadius: '10px',
-              background: '#fff',
-              textAlign: 'center'
-            }}
-          >
-            <h3>#{index + 1}</h3>
-            <img
-              src={meme.image_url}
-              alt={meme.text}
-              style={{ maxWidth: '100%', borderRadius: '6px' }}
-            />
-            <p style={{ fontWeight: 'bold' }}>{meme.text}</p>
-            <p>🔥 Votes: {meme.upVote}</p>
-          </div>
-        ))}
-      </div>
+return (
+  <div className="leaderboard-app">
+    <h1 className="title">🏆 Meme Leaderboard</h1>
+    <div className="meme-grid">
+      {memes.map((meme, index) => (
+        <div className="meme-card" key={meme.id}>
+          <h3 className="rank">#{index + 1}</h3>
+          <img src={meme.image_url} alt={meme.text} />
+          <p className="meme-text">{meme.text}</p>
+          <p className="vote-count">🔥 Votes: {meme.upVote}</p>
+        </div>
+      ))}
     </div>
-  );
+  </div>
+);
 }
 
 export default Leaderboard;
