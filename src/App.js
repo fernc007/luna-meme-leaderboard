@@ -22,7 +22,15 @@ function Leaderboard() {
   }, []);
 
 return (
+  
   <div className="leaderboard-app">
+  <header className="nav-header">
+  <nav className="nav-bar">
+    <a href="https://luna-meme-generator.vercel.app/">🖼️ Generator</a>
+    <a href="https://luna-meme-voting.vercel.app/">🗳️ Voting</a>
+    <a href="https://luna-meme-leaderboard.vercel.app/">📊 Leaderboard</a>
+  </nav>
+</header>
     <h1 className="title">🏆 Meme Leaderboard</h1>
     <div className="meme-grid">
       {memes.map((meme, index) => (
